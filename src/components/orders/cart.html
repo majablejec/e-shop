@@ -1,0 +1,63 @@
+<div class="row">
+	<div class="col-md-12">
+		<h1>Shopping Chart</h1>
+		<div ng-show="totalItems() === 0">
+			<p>Your shopping cart is empty but it does not need to be.</p>
+			<a ui-sref="home">Start shopping and search for great toys.</a>
+		</div>
+	</div>
+</div>
+
+<div style="border-bottom: solid 1px gray; padding: 10px 0px" ng-repeat="product in cart track by $index" ng-hide="product.quantity === 0">
+	<div class="row">
+		<div class="col-md-1"></br>
+			<img src="{{ product.image }}" class="img-responsive" alt="Image for {{ product.name }}">
+		</div>
+		
+		<div class="col-md-7">
+		
+			<h3>{{ product.name }}</h3>
+			<p>{{ product.tagline }}</p>
+			<h5>Item price: {{ product.price | currency }}</h5>
+			<!--<span class="label label-default">NI V REDU !!! indexOf{{ categories[product.categoryId-1].category }}</span>-->
+			<span class="label label-default">CategoryId: {{ product.categoryId }}</span>
+			<span class="label label-default">Category name: {{ getCategory(product.categoryId) }}</span>
+			<!--<pre>{{ categories }}</pre>-->
+			<span class="label label-default">{{ product.brand }}</span>
+			
+		</div>
+		<div class="col-md-3" style="text-align: right, paddig: 10%"></br>
+		
+			<form novalidate>
+				Quantity: 
+				<input type="number" class="from-control" id="usr" style="width: 4em" min="0" max="{{ product.stock }}" ng-model="product.quantity" ng-hide="product.quantity == product.stock" placeholder="{{ product.quantity }}">
+				<span ng-show="product.quantity == product.stock">{{ product.quantity }} <span class="text-muted">(No more than {{ product.stock }} items in stock.)</span></span>
+			</form>
+			</br>
+			<p ng-show="product.quantity == product.stock" ng-click="editQuantity=!editQuantity">Change quantity DODELAJ!</p>
+			<p ng-click="cartRemove(product.id)">Remove item from cart</p>
+		</div>
+		<div class="col-md-1" style="text-align: right"></br>
+			<h5>{{ product.quantity * product.price | currency }}</h5>
+		</div>
+	</div>
+</div>
+	
+<div ng-hide="totalItems() === 0">
+	<div class="row">
+		<div class="col-md-12" style="text-align: right">
+			<h3>Total price: {{ total() | currency }}</h3>
+		</div>
+	</div></br>
+
+
+	<div class="row" ng-show="{{ cart.length }}">
+		<div class="col-md-12" style="text-align: right">
+			<a class="btn btn-default" ui-sref="home" role="button">Continue shopping</a>
+			<button class="btn btn-primary" ui-sref="payment">Proceed to checkout</button>
+		</div>
+	</div>
+</div>
+
+
+

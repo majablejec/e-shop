@@ -1,0 +1,9 @@
+<label>Delivery date <small class="text-muted"> (Specify your preffered date of delivery.)</small></label>
+<div class="input-group">
+    <input type="text" class="form-control" datepicker-popup="d.M.y" ng-model="date" is-open="opened" placeholder: "specify"/>
+
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open($event)">
+                <i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+</div>

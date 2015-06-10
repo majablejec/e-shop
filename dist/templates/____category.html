@@ -1,0 +1,10 @@
+<h1>{{categories[id-1].category}}</h1>
+Maja
+<div class="well" ng-repeat="product in (productsInCategory | filter: {categoryId: categories[id-1].id})">
+	<h3>{{ product.name }}</h3>
+	<p>{{ product.price | currency }}</p>
+	<p>In stock: {{ product.stock }}</p>
+	<!--<button class="btn btn-primary" ng-click="cartAdd(product.id)">Add to chart</button>-->
+	<button class="btn btn-primary" ng-click="cartAdd(product)">Add to chart</button>
+	<a href="#" class="btn btn-info" role="button" ui-sref="product({id: {{ product.id }}})">View details</a>
+</div>

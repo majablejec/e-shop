@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-md-2">
+	</br>
+		<img src="{{ product.image }}" class="img-responsive" alt="Image for {{ product.name }}">
+		
+	</div>
+	<div class="col-md-10">
+		<h3>{{ product.name }} <small>{{ product.price | currency }}</small></h3>
+		<p>{{ product.tagline }}</p>
+		<div>In Stock: {{ product.stock }} <!--<span class="text-muted" ng-hide="availableOn">(available on: {{ product.availableOn | date }}</span>--></div>
+		</br>
+		<div><span class="label label-warning" ng-show="product.onSale">This product is on sale.</span></div>
+		</br>
+		<button class="btn btn-primary btn-sm" ng-click="cartAdd(product)">Add to chart</button>
+		<a href="#" class="btn btn-info btn-sm" role="button" ui-sref="detail({id: product.id})">View details</a>
+	</div>
+</div>

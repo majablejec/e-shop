@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="col-md-12">
+		<h1>{{ product.name }} <small>{{ product.tagline }}</small></h1>
+		<span class="label label-default">IZPIŠI IME KATEGORIJE!!!</span>
+		<span class="label label-default">{{ product.brand }}</span>
+	</div>
+</div>
+</br>
+<div class="row">
+	<div class="col-md-3">
+		<img src="{{ product.image }}" class="img-responsive" alt="Image for {{ product.name }}">
+	</div>
+	<div class="col-md-9">
+		<p>{{ product.description }}</p>
+		<div>Color: {{ product.color }}</div>
+		<div>In Stock: {{ product.stock }} <span class="text-muted" ng-hide="product.availableOn == null">(available on: {{ product.availableOn | date }})</span></div>
+		<div>Price: {{ product.price | currency }}</div>
+		</br>
+		<div><span class="label label-warning">This product is on sale.</span></div>
+		</br>
+		<!-- Narediti funkcijo checkStock() -->
+		<button class="btn btn-primary" ng-click="cartAdd(product)" ng-disabled="checkStock(product.id)">Add to chart</button>
+		<!--<p>Product ID = {{ product.id }}</p>
+		<p>Index of product ID = {{ cart[indexOf(cart, product.id)].name }}</p>
+		<pre>{{ cart }}</pre>-->
+	</div>
+</div>
