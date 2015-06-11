@@ -1,12 +1,8 @@
-angular.module('app').controller('ModalInstanceController', ['CartFactory', function($scope, input, $modalInstance, CartFactory){
+angular.module('app').controller('ModalInstanceController', ['$scope', 'total', 'totalItems', '$modalInstance', function($scope, total, totalItems, $modalInstance){
 
-	//$scope.data = input;
+    $scope.total = total;
 	
-	input = function(){
-		return CartFactory.calculateTotal();
-	};
-
-    $scope.total = input;
+	$scope.totalItems = totalItems;
 
     $scope.ok = function() {
         $modalInstance.close('Success');

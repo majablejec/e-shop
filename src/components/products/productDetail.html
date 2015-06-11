@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1>{{ product.name }} <small>{{ product.tagline }}</small></h1>
-		<span class="label label-default">IZPIŠI IME KATEGORIJE!!!</span>
+		<span class="label label-default">{{ getCategoryName(product.categoryId) }}</span>
 		<span class="label label-default">{{ product.brand }}</span>
 	</div>
 </div>

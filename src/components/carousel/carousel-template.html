@@ -1,12 +1,14 @@
 <carousel interval="interval">
 	<slide ng-repeat="product in (products | filter: {onSale: true})">
 
-		<img ng-src="{{ product.image }}" style="margin: auto;"/>
+		<a ui-sref="detail({id: product.id})">
+			<img ng-src="{{ product.image }}" style="margin: auto;"/>
 
-		<div class="carousel-caption">
-			<h3>{{ product.name }} <span class="on-sale">{{ product.price }}<span></h3>
-		</div>
-
+			<div class="carousel-caption">
+				<h3>{{ product.name }} <span class="on-sale">{{ product.price }}<span></h3>
+			</div>
+		</a>
+		
 	</slide>
 </carousel>
 

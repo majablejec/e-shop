@@ -19,10 +19,7 @@
 			<h3>{{ product.name }}</h3>
 			<p>{{ product.tagline }}</p>
 			<h5>Item price: {{ product.price | currency }}</h5>
-			<!--<span class="label label-default">NI V REDU !!! indexOf{{ categories[product.categoryId-1].category }}</span>-->
-			<span class="label label-default">CategoryId: {{ product.categoryId }}</span>
-			<span class="label label-default">Category name: {{ getCategory(product.categoryId) }}</span>
-			<!--<pre>{{ categories }}</pre>-->
+			<span class="label label-default">{{ getCategoryName(product.categoryId) }}</span>
 			<span class="label label-default">{{ product.brand }}</span>
 			
 		</div>

@@ -1,12 +1,17 @@
 //  Add ui-router as a dependency
 angular.module('app', ['ui.router', 'ngResource', 'ui.bootstrap']);
 
-angular.module('app').controller('MainCtrl', ['$scope', '$stateParams', 'CategoryFactory', 'ProductFactory', 'CartFactory', function($scope, $stateParams, CategoryFactory, ProductFactory, CartFactory) {
+angular.module('app').controller('MainCtrl', ['$scope', '$stateParams', 'CategoryFactory', 'ProductFactory', 'CartFactory', 'ProductCategoryFactory', function($scope, $stateParams, CategoryFactory, ProductFactory, CartFactory, ProductCategoryFactory) {
   
 	//$scope.categories = CategoryFactory.query();
 	$scope.categories = CategoryFactory.query({id: $stateParams.id});
 	
 	$scope.products = ProductFactory.query();
+	
+	$scope.productsInCategory = ProductCategoryFactory.query({id: $stateParams.id});
+	
+	
+	// CART
 	
 	$scope.cartAdd = function(id){
 		CartFactory.cartAdd(id);
@@ -26,26 +31,40 @@ angular.module('app').controller('MainCtrl', ['$scope', '$stateParams', 'Categor
 	
 	$scope.cart = CartFactory.getCart();
 	
+	// SLIDER
+	// Če intervala ni v MainControlerju, se sider ne vrti
+	
 	$scope.interval = 3000;
+	
+	// ORDER
 	
 	$scope.order = function() {
 		$scope.validation = true;
 		alert($scope.cart);
 	};
 	
+	// IndexOf
+	
 	/*$scope.indexOf = function(list, id){
 		IndexFactory.indexOf(list, id);
 	};*/
 	
-	indexOf = function(list, id) {
+	
+	$scope.indexOf = function(list, id) {
+		console.log('id:' + id);
+		console.log('list:' + angular.toJson(list));
 		for (var i = 0; i < list.length; i++) {
+			console.log('v for zanki');
 			if (list[i].id === id) { 
+				console.log('list[i].id:' + list[i].id);
+				console.log('i:' + i);
 				return i; 
 			}
 		}
 		return -1;
 	};
 	
+	/*
 	getCategory = function(categoryId) {
 		console.log(categoryId);
 		return 'abc';
@@ -57,8 +76,35 @@ angular.module('app').controller('MainCtrl', ['$scope', '$stateParams', 'Categor
 			} 
 		});*/
 		
+	/*};*/
+	
+	$scope.stateParamsId = $stateParams.id;
+	
+	
+	$scope.getCategory = function(id) {
+		var result;
+		$scope.categories.forEach(function(item){
+			if(item.id == id) {
+				result = item;
+			}
+		});
+
+		return result;
+	
 	};
 	
+	$scope.getCategoryName = function(categoryId) {
+		var result;
+		$scope.categories.forEach(function(item){
+			if(item.id == categoryId) {
+				result = item.category;
+			}
+		});
+
+		return result;
+	
+	};
+
 }]);
 
 angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
@@ -119,10 +165,10 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider.state('orders',
 	{
 		url: '/orders',
-		template: '<h2>Submitted a new POST request for an order</h2><p>Check the network tab of your developer tools.</p>',
+		template: '<h2>Submitted a new POST request for an order</h2><p>Check the network tab of your developer tools.{{ email }}</p>',
 		controller: function ($scope, OrderFactory)
 		{
-			var newOrder = new OrderFactory({items: [], price: {}});
+			var newOrder = new OrderFactory({firstName: firstName, email: email, });
 			newOrder.$save();
 		}
 	});
@@ -168,11 +214,32 @@ angular.module('app').factory('CategoryFactory', function ($resource) {
     return $resource('http://smartninja.betoo.si/api/eshop/categories');
     
 });
+angular.module('app').factory('ProductCategoryFactory', function ($resource) {
+
+	return $resource('http://smartninja.betoo.si/api/eshop/categories/:id/products', {onlyStocked:true});
+    
+});
 angular.module('app').controller('CategoryCtrl', ['$scope', 'CategoryFactory', function($scope, CategoryFactory) {
 	
 	$scope.categories = CategoryFactory.query({id: $stateParams.id});
 	
 }]);
+angular.module('app').directive('appDatepicker', function(){
+    return {
+        restrict: 'E',
+        controller: 'DatesController',
+        templateUrl: 'templates/datepicker-template.html'
+    };
+});
+angular.module('app').controller('DatesController', function($scope){
+
+    $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.opened = true;
+    };
+});
 /*angular.module('app').factory('IndexFactory', [ '$rootScope', function($rootScope){
 	
 	return {
@@ -199,22 +266,6 @@ angular.module('app').factory('IndexFactory', [ '$rootScope', function($rootScop
 	}; 
                         
 }]);
-angular.module('app').directive('appDatepicker', function(){
-    return {
-        restrict: 'E',
-        controller: 'DatesController',
-        templateUrl: 'templates/datepicker-template.html'
-    };
-});
-angular.module('app').controller('DatesController', function($scope){
-
-    $scope.open = function($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        $scope.opened = true;
-    };
-});
 angular.module('app').directive('appModal', function ()
 {
     return {
@@ -227,10 +278,13 @@ angular.module('app').directive('appModal', function ()
                                                     templateUrl: 'templates/modal-template.html',
                                                     controller:  'ModalInstanceController',
                                                     resolve:     {
-                                                        input: function ()
+                                                        total: function ()
                                                         {
-                                                            //return [1, 2, 3];
-															return $scope.total;
+                                                            return $scope.total();
+                                                        },
+														totalItems: function ()
+                                                        {
+                                                            return $scope.totalItems();
                                                         }
                                                     }
                                                 });
@@ -247,15 +301,11 @@ angular.module('app').directive('appModal', function ()
 		template: '<a class="btn btn-info" ng-click="openModal()" role="button">Cart summary MODAL</a>'
     };
 });
-angular.module('app').controller('ModalInstanceController', ['CartFactory', function($scope, input, $modalInstance, CartFactory){
+angular.module('app').controller('ModalInstanceController', ['$scope', 'total', 'totalItems', '$modalInstance', function($scope, total, totalItems, $modalInstance){
 
-	//$scope.data = input;
+    $scope.total = total;
 	
-	input = function(){
-		return CartFactory.calculateTotal();
-	};
-
-    $scope.total = input;
+	$scope.totalItems = totalItems;
 
     $scope.ok = function() {
         $modalInstance.close('Success');
@@ -275,7 +325,11 @@ angular.module('app').factory('CartFactory', [ '$rootScope', function($rootScope
 		cart.push(product);
 	};
 	
-	/*
+	// Sem jo poskusila narediti univerzalno
+	// Dala sem jo v MainCtrl kot $scope.indexOf.
+	// Ampak je ne vleče, če ima $scope spredaj.
+	// Samo, če ga nima.
+	// Potemtakem pa ne more biti univerzalna in sem jo pustila kar tukaj v CartFactory
 	indexOf = function(list, id) {
 		for (var i = 0; i < list.length; i++) {
 			if (list[i].id === id) { 
@@ -284,8 +338,7 @@ angular.module('app').factory('CartFactory', [ '$rootScope', function($rootScope
 		}
 		return -1;
 	}; 
-	*/
-  
+	
 	return {
 		getCart : function() {
 			return cart;
@@ -390,11 +443,11 @@ angular.module('app').directive('appTimepicker', function(){
 angular.module('app').controller('TypeController', function($scope, $http){
 
     $scope.getItems = function(query){
-        return $http.get('http://smartninja.betoo.si/api/eshop/products', {params:{query : query}}).then(function(response)
-                                                                                                         {
-                                                                                                             return response.data;
-                                                                                                         })
+        return $http.get('http://smartninja.betoo.si/api/eshop/products', {params:{query : query}}).then(function(response) {
+            return response.data;
+        })
     };
+	
 });
 angular.module('app').directive('appTypeahead', function(){
 	return {

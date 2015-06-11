@@ -7,7 +7,11 @@ angular.module('app').factory('CartFactory', [ '$rootScope', function($rootScope
 		cart.push(product);
 	};
 	
-	/*
+	// Sem jo poskusila narediti univerzalno
+	// Dala sem jo v MainCtrl kot $scope.indexOf.
+	// Ampak je ne vleče, če ima $scope spredaj.
+	// Samo, če ga nima.
+	// Potemtakem pa ne more biti univerzalna in sem jo pustila kar tukaj v CartFactory
 	indexOf = function(list, id) {
 		for (var i = 0; i < list.length; i++) {
 			if (list[i].id === id) { 
@@ -16,8 +20,7 @@ angular.module('app').factory('CartFactory', [ '$rootScope', function($rootScope
 		}
 		return -1;
 	}; 
-	*/
-  
+	
 	return {
 		getCart : function() {
 			return cart;

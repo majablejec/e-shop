@@ -56,10 +56,10 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider.state('orders',
 	{
 		url: '/orders',
-		template: '<h2>Submitted a new POST request for an order</h2><p>Check the network tab of your developer tools.</p>',
+		template: '<h2>Submitted a new POST request for an order</h2><p>Check the network tab of your developer tools.{{ email }}</p>',
 		controller: function ($scope, OrderFactory)
 		{
-			var newOrder = new OrderFactory({items: [], price: {}});
+			var newOrder = new OrderFactory({firstName: firstName, email: email, });
 			newOrder.$save();
 		}
 	});

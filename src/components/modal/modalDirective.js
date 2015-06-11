@@ -10,10 +10,13 @@ angular.module('app').directive('appModal', function ()
                                                     templateUrl: 'templates/modal-template.html',
                                                     controller:  'ModalInstanceController',
                                                     resolve:     {
-                                                        input: function ()
+                                                        total: function ()
                                                         {
-                                                            //return [1, 2, 3];
-															return $scope.total;
+                                                            return $scope.total();
+                                                        },
+														totalItems: function ()
+                                                        {
+                                                            return $scope.totalItems();
                                                         }
                                                     }
                                                 });

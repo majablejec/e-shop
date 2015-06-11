@@ -4,39 +4,42 @@
 		<form name="paymentForm" novalidate>
 
 			<div class="form-group">
-				<label>Name</label>
-				<input type="text" class="form-control" name="name" ng-model="name" placeholder="Enter your name."/>
+				<label>First name</label>
+				<input type="text" class="form-control" name="firstName" ng-model="firstName" placeholder="Enter your first name."/>
 			</div>
 			
 			<div class="form-group">
-				<label>Street</label>
-				<input type="text" class="form-control" name="street" ng-model="street" placeholder="Enter the name of your street.">
+				<label>Last name</label>
+				<input type="text" class="form-control" name="lastName" ng-model="lastName" placeholder="Enter your last name."/>
 			</div>
 			
 			<div class="form-group">
-				<label>Street Number</label>
-				<input type="number" class="form-control" name="streetNumber" ng-model="streetNumber" placeholder="Enter the number of your street.">
-				<p class="text-danger" ng-show="paymentForm.streetNumber.$error.number && validation">Please enter a number.</p>
-			</div>
-			
-			<div class="form-group">
-				<label>City</label>
-				<input type="text" class="form-control" name="city" ng-model="city" placeholder="Enter the name of your city.">
-			</div>
-
-			<div class="form-group">
-				<label>Postal code*</label>
-				<input type="text" class="form-control" name="postalCode" ng-model="postalCode" ng-required="true" ng-pattern="/^[A-Za-z]{2}-[0-9]{4}$/" placeholder="Enter the postal code of your city. Please use format SI-1000.">
-				<p class="text-danger" ng-show="paymentForm.postalCode.$error.required && paymentForm.postalCode.$dirty">This field is required.</p>
-				<p class="text-danger" ng-show="paymentForm.postalCode.$error.pattern && paymentForm.postalCode.$dirty">Please use format SI-1000.</p>
-			</div>
-			
-			<div class="form-group">
-				<label>Email address*</label>
+				<label>Email</label>
 				<input type="email" class="form-control" name="email" ng-model="email" ng-required="true" placeholder="Enter your email."/>
 				<p class="text-danger" ng-show="paymentForm.email.$error.required && paymentForm.email.$dirty">This field is required.</p>
 				<p class="text-danger" ng-show="paymentForm.email.$error.email && paymentForm.email.$dirty">Please write a valid e-mail address.</p>
 			</div>
+			
+			<div class="form-group">
+				<label>Address</label>
+				<input type="text" class="form-control" name="address" ng-model="address" placeholder="Enter your address.">
+			</div>
+			
+			<div class="form-group">
+				<label>Country</label>
+				<input type="text" class="form-control" name="country" ng-model="country" placeholder="Enter your country.">
+			</div>
+			
+			<div class="form-group">
+				<label>City</label>
+				<input type="text" class="form-control" name="city" ng-model="city" placeholder="Enter your city.">
+			</div>
+			
+			<div class="form-group">
+				<label>ZIP</label>
+				<input type="number" class="form-control" name="zip" ng-model="zip" max="5" placeholder="Enter the ZIP of your city.">
+			</div>
+			
 			<div class="form-group">
 				<app-datepicker></app-datepicker>
 			</div>
@@ -45,9 +48,8 @@
 			</div>
 
 			<a class="btn btn-default" ui-sref="cart" role="button">Back to chart</a>
-			<!--<a class="btn btn-info" ui-sref="cart" role="button">Cart summary</a>-->
 			<app-modal></app-modal>
-			<button type="submit" class="btn btn-primary" ng-disabled="paymentForm.$invalid" ng-click="order(cart)">Confirm and Pay</button>
+			<button type="submit" class="btn btn-primary" ng-disabled="paymentForm.$invalid" ui-sref="orders({ firstName: firstName, email: email })">Confirm and Pay</button>
 		</form>
 
 	</div>
