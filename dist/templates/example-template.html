@@ -1,7 +1,8 @@
 <div class="well">
-	<h4>Example directive</h4>
-	
-	<span class="text-muted">Data: </span>
-	<p>{{ example }}</p>
+	<input type="text" ng-model="input" class="form-control">
 
+	<hr>
+	<button class="btn btn-primary" ng-click="save(input)">Save</button>
+	<button class="btn btn-default" ng-click="load()">Load</button> 
+	<button class="btn btn-link" ng-click="deleteAll()">Delete all</button> 
 </div>

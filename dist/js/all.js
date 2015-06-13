@@ -1,5 +1,12 @@
-//  Add ui-router as a dependency
-angular.module('app', ['ui.router', 'ngResource', 'ui.bootstrap']);
+angular.module('app', ['ui.router', 'ngResource', 'ui.bootstrap', 'angular-locker']);
+
+angular.module('app').config(function(lockerProvider){
+	
+	//	Setting default driver and namespace
+	lockerProvider.setDefaultDriver('local')
+		  .setDefaultNamespace('app');
+	
+});
 
 angular.module('app').controller('MainCtrl', ['$scope', '$stateParams', 'CategoryFactory', 'ProductFactory', 'CartFactory', 'ProductCategoryFactory', function($scope, $stateParams, CategoryFactory, ProductFactory, CartFactory, ProductCategoryFactory) {
   
@@ -224,6 +231,32 @@ angular.module('app').controller('CategoryCtrl', ['$scope', 'CategoryFactory', f
 	$scope.categories = CategoryFactory.query({id: $stateParams.id});
 	
 }]);
+angular.module('app').controller('ExampleController', function($scope, locker){
+
+	$scope.save = function(input)
+	{
+		locker.put('key', input);
+	}
+
+	$scope.load = function()
+	{
+		$scope.input = locker.get('key', 'Default value');
+	}
+
+	$scope.deleteAll = function()
+	{
+		locker.empty();
+	}
+
+});
+angular.module('app').directive('appExample', function(){
+	return {
+		restrict: 'E',
+		scope:{},
+		controller: 'ExampleController',
+		templateUrl: 'templates/example-template.html'
+	};
+});
 angular.module('app').directive('appDatepicker', function(){
     return {
         restrict: 'E',
@@ -393,6 +426,45 @@ angular.module('app').factory('CartFactory', [ '$rootScope', function($rootScope
 		}
 	};                                  
 }]);
+angular.module('app').controller('OrderCtrl', ['$scope', 'OrderFactory', function($scope, OrderFactory) {
+
+	$scope.orders = function(firstName, lastName, email, address, country, city, zip, cart){
+		
+		var newOrder = new OrderFactory
+		(
+		
+			{
+				"firstName": firstName, 
+				
+				"lastName": lastName,
+				
+				"email": email, 
+				
+				"address": address,
+				
+				"country": country,
+				
+				"city": city,
+				
+				"zip": zip,
+				
+				"products": cart 
+			}
+		);
+		
+		console.log(newOrder);
+	
+	newOrder.$save().then(function(success){
+		alert("Your payment has been successfuly made.");
+	}, function(error){
+		alert("ni ok");
+	});;
+	
+	};
+	
+}]);
+
+
 angular.module('app').factory('OrderFactory', function($resource){
 	
 	return $resource('http://smartninja.betoo.si/api/eshop/orders');
