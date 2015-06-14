@@ -1,0 +1,49 @@
+html, body {
+	height: 100%
+}
+
+body { 
+	padding: 60px 0 0 0;
+	padding-bottom: 200px;
+}
+
+/*** product on sale - cross ower old price ***/
+
+.on-sale {
+	position: relative;
+	display: inline-block;
+}
+
+.on-sale::before, .on-sale::after {
+	content: '';
+	width: 100%;
+	position: absolute;
+	right: 0;
+	top: 50%;
+}
+
+.on-sale::before {
+	border-bottom: 3px solid #f39c12;
+	-webkit-transform: skewY(-25deg);
+	transform: skewY(-25deg);
+}
+
+.on-sale::after {
+	border-bottom: 3px solid #f39c12;
+	-webkit-transform: skewY(25deg);
+	transform: skewY(25deg);
+}
+
+/*** customizing CSS for cart ***/
+
+.cart-list{
+	border-bottom: solid 1px gray; 
+	padding: 10px 0px;
+}
+
+.cart-total,
+.cart-buttons,
+.cart-action
+.cart-total-item  {
+	text-align: right;
+}

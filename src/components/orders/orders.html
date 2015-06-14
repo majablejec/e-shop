@@ -1,0 +1,67 @@
+<div ng-controller="OrdersCtrl">
+<div>
+<div class="row">
+	<div class="col-md-6">
+		<h1>Payment form</h1>
+		<form id="paymentForm" name="paymentForm" novalidate>
+
+			<div class="form-group">
+				<label>First name*</label>
+				<input type="text" class="form-control" name="firstName" ng-model="firstName" ng-required="true" placeholder="Enter your first name."/>
+				<p class="text-danger" ng-show="paymentForm.firstName.$error.required && paymentForm.firstName.$dirty">This field is required.</p>
+			</div>
+			
+			<div class="form-group">
+				<label>Last name*</label>
+				<input type="text" class="form-control" name="lastName" ng-model="lastName" ng-required="true" placeholder="Enter your last name."/>
+				<p class="text-danger" ng-show="paymentForm.lastName.$error.required && paymentForm.lastName.$dirty">This field is required.</p>
+			</div>
+			
+			<div class="form-group">
+				<label>Email*</label>
+				<input type="email" class="form-control" name="email" ng-model="email" ng-required="true" placeholder="Enter your email."/>
+				<p class="text-danger" ng-show="paymentForm.email.$error.required && paymentForm.email.$dirty">This field is required.</p>
+				<p class="text-danger" ng-show="paymentForm.email.$error.email && paymentForm.email.$dirty">Please write a valid e-mail address.</p>
+			</div>
+			
+			<div class="form-group">
+				<label>Address*</label>
+				<input type="text" class="form-control" name="address" ng-model="address" ng-required="true" placeholder="Enter your address.">
+				<p class="text-danger" ng-show="paymentForm.address.$error.required && paymentForm.address.$dirty">This field is required.</p>
+			</div>
+			
+			<div class="form-group">
+				<label>Country*</label>
+				<input type="text" class="form-control" name="country" ng-model="country" ng-required="true" placeholder="Enter your country.">
+				<p class="text-danger" ng-show="paymentForm.country.$error.required && paymentForm.country.$dirty">This field is required.</p>
+			</div>
+			
+			<div class="form-group">
+				<label>City*</label>
+				<input type="text" class="form-control" name="city" ng-model="city" ng-required="true" placeholder="Enter your city.">
+				<p class="text-danger" ng-show="paymentForm.city.$error.required && paymentForm.city.$dirty">This field is required.</p>
+			</div>
+			
+			<div class="form-group">
+				<label>ZIP*</label>
+				<input type="number" class="form-control" name="zip" ng-model="zip" ng-required="true" placeholder="Enter the ZIP of your city.">
+				<p class="text-danger" ng-show="paymentForm.zip.$error.required && paymentForm.zip.$dirty">This field is required.</p>
+			</div>
+			
+			<div class="form-group">
+				<app-datepicker></app-datepicker>
+			</div>
+			<div class="form-group">
+				<app-timepicker></app-timepicker>
+			</div>
+
+			<a class="btn btn-default" ui-sref="cart" role="button">Back to chart</a>
+			<app-modal></app-modal>
+			<button type="submit" class="btn btn-primary" ng-disabled="paymentForm.$invalid" ng-click="orders(firstName, lastName, email, address, country, city, zip, cart)">Confirm and Pay</button>
+		</form>
+
+	</div>
+	<div class="col-md-6">
+	</div>
+</div>
+</div>

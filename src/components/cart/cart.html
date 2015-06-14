@@ -1,0 +1,35 @@
+<div ng-controller="CartCtrl">
+<div class="row">
+	<div class="col-md-12">
+		<h1>Shopping Chart</h1>
+		{{ totalItems }}
+		<div ng-show="totalItems() === 0">
+			<cart-empty></cart-empty>
+		</div>
+	</div>
+</div>
+
+
+<div class="cart-list" ng-repeat="product in cart track by $index" ng-hide="product.quantity === 0">
+	<product-in-cart></product-in-cart>
+</div>
+
+<div ng-hide="totalItems() === 0">
+	<div class="row cart-total">
+		<div class="col-md-12">
+			<h3>Total price: {{ total() | currency }}</h3>
+		</div>
+	</div></br>
+
+
+	<div class="row" ng-show="{{ cart.length }}">
+		<div class="col-md-12 cart-buttons">
+			<a class="btn btn-default" ui-sref="home" role="button">Continue shopping</a>
+			<button class="btn btn-primary" ui-sref="orders">Proceed to checkout</button>
+		</div>
+	</div>
+</div>
+</div>
+
+
+

@@ -1,0 +1,46 @@
+<div class="row">
+
+	<div class="col-md-1"></br>
+		<a ui-sref="detail({id: product.id})"><img ng-src="{{ product.image }}" class="img-responsive" alt="Image for {{ product.name }}"></a>
+	</div>
+	
+	<div class="col-md-7">
+	
+		<h3>{{ product.name }}</h3>
+		<p>{{ product.tagline }}</p>
+		<h5>Item price: {{ product.price | currency }}</h5>
+		<span class="label label-default">{{ getCategoryName(product.categoryId) }}</span>
+		<span class="label label-default">{{ product.brand }}</span>
+		
+	</div>
+	
+	<!--
+	<div class="col-md-3" style="text-align: right, paddig: 10%"></br>
+	
+		<form novalidate>
+			Quantity: 
+			<input type="number" class="from-control" id="usr" style="width: 4em" min="0" max="{{ product.stock }}" ng-model="product.quantity" ng-hide="product.quantity == product.stock" placeholder="{{ product.quantity }}">
+			<span ng-show="product.quantity == product.stock">{{ product.quantity }} <span class="text-muted">(No more than {{ product.stock }} items in stock.)</span></span>
+		</form>
+		</br>
+		<p ng-show="product.quantity == product.stock" ng-click="editQuantity=!editQuantity">Change quantity DODELAJ!</p>
+		<p ng-click="cartRemove(product.id)">Remove item from cart</p>
+	</div>
+	-->
+	
+	<div class="col-md-3 cart-action"></br>
+	
+		<form novalidate>
+			Quantity: 
+			<input type="number" class="from-control" id="quantity" min="0" max="{{ product.stock }}" ng-model="product.quantity" placeholder="{{ product.quantity }}">
+			<p ng-show="product.quantity == product.stock" class="text-muted">Only {{ product.stock }} pieces of {{ product.name }} in in stock.</p>
+		</form>
+		</br>
+		<p ng-click="cartRemove(product.id)">Remove item from cart</p>
+	</div>
+	
+	<div class="col-md-1 cart-total-item" style="text-align: right"></br>
+		<h5>{{ product.quantity * product.price | currency }}</h5>
+	</div>
+	
+</div>
