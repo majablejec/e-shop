@@ -1,4 +1,4 @@
-angular.module('app').factory('IndexFactory', [ '$rootScope', function($rootScope){
+/*angular.module('app').factory('IndexFactory', [ '$rootScope', function($rootScope){
 	
 	indexOf = function(list, id) {
 		for (var i = 0; i < list.length; i++) {
@@ -9,4 +9,4 @@ angular.module('app').factory('IndexFactory', [ '$rootScope', function($rootScop
 		return -1;
 	}; 
                         
-}]);
+}]);*/

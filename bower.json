@@ -19,7 +19,8 @@
     "angular-ui-router": "~0.2.15",
     "angular-resource": "1.4.*",
     "angular-bootstrap": "~0.13.0",
-    "angular-locker": "~2.0.0"
+    "angular-locker": "~2.0.0",
+    "angular-animate": "~1.4.0"
   },
   "resolutions": {
     "angular": "1.4.0"

@@ -6,7 +6,7 @@ angular.module('app').directive('appModal', function ()
         {
             $scope.openModal = function ()
             {
-                var modalInstance = $modal.open({
+				var modalInstance = $modal.open({
                                                     templateUrl: 'templates/modal-template.html',
                                                     controller:  'ModalInstanceController',
                                                     resolve:     {
@@ -30,6 +30,6 @@ angular.module('app').directive('appModal', function ()
                                           });
             }
         },
-		template: '<a class="btn btn-info" ng-click="openModal()" role="button">Cart summary MODAL</a>'
+		template: '<a class="btn btn-info" ng-click="openModal()" role="button">Cart summary</a>'
     };
 });

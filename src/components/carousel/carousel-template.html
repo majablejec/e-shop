@@ -1,4 +1,4 @@
-<carousel interval="interval">
+<carousel interval="interval" disable-animation="true">
 	<slide ng-repeat="product in (products | filter: {onSale: true})">
 
 		<a ui-sref="detail({id: product.id})">

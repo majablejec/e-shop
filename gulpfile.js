@@ -25,6 +25,22 @@ gulp.task('move', function(){
 
 });
 
+// Task for moving CSS
+gulp.task('moveCSS', function(){
+
+	//	Set the source
+	gulp.src(['./src/resources/css/*.css'])
+	.pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: true
+        }))
+	.pipe(concat('main.css'))
+	//	Pipe it and store it in the dist folder
+	.pipe(gulp.dest('./dist/css'))
+	//	Notify the user
+	.pipe(notify('Moved CSS!'));
+});
+
 //	Task for concating and moving all js files
 gulp.task('scripts', function(){
 
@@ -55,12 +71,13 @@ gulp.task('serve', function(){
 gulp.task('watch', ['serve'], function(){
 
 	//	Run tasks on start
-	gulp.start(['scripts', 'move']);
+	gulp.start(['scripts', 'move', 'moveCSS', ]);
 
 	//	Create a watcher that will run the scripts task
-	//	anytime a .js file changes
+	//	anytime a .js or .css file changes
 	gulp.watch(['./src/**/*.js'], ['scripts']);
 	gulp.watch(['./src/**/*.html'], ['move']);
+	gulp.watch(['./src/resources/css/*.css'], ['moveCSS']);
 });
 
 

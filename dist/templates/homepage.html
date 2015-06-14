@@ -4,7 +4,7 @@
 	</div>
 </div>
 
- <app-example></app-example>
+<!--<app-example></app-example>-->
 
 <div class="row">
 	<div class="col-md-12">
@@ -13,13 +13,7 @@
 </div>
 
 <div class="row">
-	<div class="col-md-12 well" ng-repeat="product in products">
+	<div class="col-md-12 well" ng-repeat="product in (products | filter: {onSale: true})">
 		<product></product>
 	</div>
 </div>
-
-<!--
-<div class="well" ng-repeat="product in products">
-	<product></product>
-</div>
--->

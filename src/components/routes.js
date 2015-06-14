@@ -5,69 +5,85 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider.state('home',
 	{
 		url: '/',
-		templateUrl: 'templates/homepage.html'
-	});
-
-	/*$stateProvider.state('category',
-	{
-		url: '/category',
-		templateUrl: 'templates/category-new.html',
-		//controller:  function ($scope, CategoryFactory)
-		//{
-			//$scope.categories = CategoryFactory.query({});
-		//}
-		controller: 'MainCtrl'
-	});*/
-							  
-	$stateProvider.state('categories',
-	{
-		url: '/categories/:id',
-		templateUrl: 'templates/category.html',
-		/*controller: function ($scope, CategoryFactory, $stateParams)
+		templateUrl: 'templates/homepage.html',
+		controller: function ($scope, ProductFactory)
 		{
-			$scope.category = CategoryFactory.query({id: $stateParams.id});
-		}*/
-		//controller: 'CategoryCtrl'
-		controller: 'MainCtrl'
-	});
-
-	$stateProvider.state('products',
-	{
-		url: '/products',
-		templateUrl: 'templates/products.html',
-		/*controller: function ($scope, ProductFactory)
-		{
-			//$scope.products = ProductFactory.query({onlyStocked: true});
 			$scope.products = ProductFactory.query();
-		}*/
-		controller: 'MainCtrl'
+		}
+	});
+	
+	$stateProvider.state('error',
+	{
+		url: '/error',
+		template: '<h2>The page you requested does not exists.</h2>'
 	});
 
 	$stateProvider.state('detail',
 	{
 		url: '/products/:id',
 		templateUrl: 'templates/productDetail.html',
-		controller: function ($scope, ProductFactory, $stateParams)
+		controller: function ($scope, ProductFactory, CartFactory, $stateParams, CategoryFactory)
 		{
 			$scope.product = ProductFactory.get({id: $stateParams.id});
-		}
-	});
+			
+			$scope.cartAdd = function(id){
+				CartFactory.cartAdd(id);
+			};
+			
+			$scope.cart = CartFactory.getCart();
+			
+			// Te funkcije mi ni uspelo prestaviti v CategoryFactoryPart2
+			// Error: [$injector:unpr] Unknown provider: $scopeProvider <- $scope <- CategoryFactoryPart2
+			// T U K A J
+			
+			/*$scope.getCategoryName = function(categoryId) {
+				var result;
+				$scope.categories.forEach(function(item){
+					if(item.id == categoryId) {
+						result = item.category;
+					}
+				});
 
-	$stateProvider.state('orders',
-	{
-		url: '/orders',
-		template: '<h2>Submitted a new POST request for an order</h2><p>Check the network tab of your developer tools.{{ email }}</p>',
-		controller: function ($scope, OrderFactory)
-		{
-			var newOrder = new OrderFactory({firstName: firstName, email: email, });
-			newOrder.$save();
+				return result;
+			
+			};*/
+			
+			//$scope.getCategoryName = function(id){
+				//CategoryFactoryPart2.getCategoryName(id);
+			//};
 		}
 	});
-													  										  
-	$stateProvider.state('error',
+	
+	$stateProvider.state('categories',
 	{
-		url: '/error',
-		template: '<h2>The page you requested does not exists.</h2>'
+		url: '/categories/:id',
+		templateUrl: 'templates/category.html',
+		controller: function ($scope, $stateParams, CategoryFactory)
+		{
+			$scope.stateParamsId = $stateParams.id;
+			
+			// Te funkcije mi ni uspelo prestaviti v CategoryFactoryPart2
+			// Error: [$injector:unpr] Unknown provider: $scopeProvider <- $scope <- CategoryFactoryPart2
+			// T U K A J
+			
+			/*$scope.getCategory = function(id) {
+				var result;
+				$scope.categories.forEach(function(item){
+					if(item.id == id) {
+						result = item;
+					}
+			});
+
+			return result;
+	
+			};*/
+			
+			/*
+			$scope.getCategory = function(id){
+				CategoryFactoryPart2.getCategory(id);
+			};
+			*/
+		}
 	});
 	
 	$stateProvider.state('cart',
@@ -76,11 +92,10 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
 		templateUrl: 'templates/cart.html',
 	});
 	
-	$stateProvider.state('payment',
+	$stateProvider.state('orders',
 	{
-		url: '/payment',
-		templateUrl: 'templates/payment.html',
+		url: '/orders',
+		templateUrl: 'templates/orders.html',
 	});
 
 });
-
